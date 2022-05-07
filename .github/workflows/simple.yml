@@ -14,6 +14,7 @@ jobs:
           npm -v
   run-test-command:
     runs-on: ubuntu-latest
+    needs: ["run-shell-commands"]
     steps:
       - name: print pwd
         run: pwd
