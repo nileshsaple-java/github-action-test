@@ -1,0 +1,40 @@
+name: Server Start Stop
+
+on:
+  workflow_dispatch:
+    inputs:
+      envName:
+        description: 	Environment Name
+        type: choice
+        options:
+          - "devl"
+          - "qual"
+          - "cert"
+        required: true
+
+      serverName:
+        required: true
+        type: string
+        description: "Enter the end server name(s) separated with commas. Example: lsdq9tc1008.sdde.deere.com,lsdq9tc1009.sdde.deere.com"
+
+      command:
+        description: 	Command
+        type: choice
+        options:
+          - "start"
+          - "stop"
+          - "restart"
+        required: true
+
+jobs:
+  gpps-server-start-stop:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Logging inputs
+        run: |
+          echo envName ${{ github.event.inputs.envName }}
+          echo serverName ${{ github.event.inputs.serverName }}
+          echo command ${{ github.event.inputs.command }}
+
+
