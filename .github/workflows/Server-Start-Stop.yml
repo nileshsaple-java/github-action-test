@@ -3,7 +3,7 @@ name: Server Start Stop
 on:
   workflow_dispatch:
     inputs:
-      envName:
+      environmentName:
         description: Environment Name
         type: choice
         options:
@@ -38,8 +38,8 @@ jobs:
           environmentName: ${{ github.event.inputs.environmentName }}
           serverName: ${{ github.event.inputs.serverName }}
           command: ${{ github.event.inputs.command }} 
-          applicationID: applicationID
-          applicationPassword: applicationPassword
+          applicationID: ${{ secrets.applicationID }}
+          applicationPassword: ${{ secrets.applicationPassword }}
           
         run: |
           echo "environmentName=${environmentName}"
@@ -53,7 +53,7 @@ jobs:
             finalServerName=${Servername}/gpps.${truncateServerName}
             echo "finalServerName=${finalServerName}"
             echo  "Running Deployit API"
-            InitialUrl=https://abc/deployit/control/prepare/$command/${environmentName}/$finalServerName
+            InitialUrl=https://abc/deployit/control/prepare/$command/$environmentName/$finalServerName
             echo "InitialUrl=${InitialUrl}"
             returnValue=Get -u $applicationID:$applicationPassword $InitialUrl
             echo "returnValue=${returnValue}"    
