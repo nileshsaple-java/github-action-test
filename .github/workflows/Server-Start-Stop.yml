@@ -24,6 +24,8 @@ on:
           - "start"
           - "stop"
           - "restart"
+          - "doc"
+          - "recover"
         required: true
 
 jobs:
@@ -31,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Logging inputs
+      - name: server start stop
         env:
           environmentName: ${{ github.event.inputs.environmentName }}
           serverName: ${{ github.event.inputs.serverName }}
