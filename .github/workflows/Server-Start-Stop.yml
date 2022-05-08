@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       envName:
-        description: 	Environment Name
+        description: Environment Name
         type: choice
         options:
           - "devl"
@@ -15,7 +15,7 @@ on:
       serverName:
         required: true
         type: string
-        description: "Enter the end server name(s) separated with commas. Example: lsdq9tc1008.sdde.deere.com,lsdq9tc1009.sdde.deere.com"
+        description: Enter the end server name(s) separated with commas
 
       command:
         description: 	Command
