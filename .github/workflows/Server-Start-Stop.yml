@@ -53,10 +53,9 @@ jobs:
             finalServerName=${Servername}/gpps.${truncateServerName}
             echo "finalServerName=${finalServerName}"
             echo  "Running Deployit API"
-            echo "ServerName:${Servername}"
-            InitialUrl=https://abc/deployit/control/prepare/$command/$environmentName/$finalServerName
+            InitialUrl=https://abc/deployit/control/prepare/$command/${environmentName}/$finalServerName
             echo "InitialUrl=${InitialUrl}"
-            Return_value=Get -u $applicationID:$applicationPassword $InitialUrl
-            echo "Return_value=${Return_value}"    
+            returnValue=Get -u $applicationID:$applicationPassword $InitialUrl
+            echo "returnValue=${returnValue}"    
           done
           
