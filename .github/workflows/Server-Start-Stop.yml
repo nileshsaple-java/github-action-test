@@ -49,6 +49,11 @@ jobs:
           IFS=',' read -ra ServerNameArray <<< "${{ github.event.inputs.serverName }}";
           for Servername in "${ServerNameArray[@]}"; do
             echo "ServerName:${Servername}"
+            truncateServerName=$(echo "${Servername}" | awk -F'.' '{print $1}')
+            finalServerName=${Servername}/gpps.${truncateServerName}
+            echo "finalServerName=${finalServerName}"
+            echo  "Running Deployit API"
+            echo "ServerName:${Servername}"
             InitialUrl=https://abc/deployit/control/prepare/$command/$environmentName/$finalServerName
             echo "InitialUrl=${InitialUrl}"
             Return_value=Get -u $applicationID:$applicationPassword $InitialUrl
