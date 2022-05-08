@@ -32,13 +32,18 @@ jobs:
 
     steps:
       - name: Logging inputs
+        env:
+          environmentName: ${{ github.event.inputs.environmentName }}
+          serverName: ${{ github.event.inputs.serverName }}
+          command: ${{ github.event.inputs.command }} 
+          
         run: |
-          echo envName ${{ github.event.inputs.envName }}
-          echo serverName ${{ github.event.inputs.serverName }}
-          echo command ${{ github.event.inputs.command }}
+          echo "environmentName ${ environmentName }"
+          echo "serverName=${ serverName }""
+          echo "command=${ command }
           
           IFS=',' read -ra ServerNameArray <<< "${{ github.event.inputs.serverName }}";
-            for Servername in "${ServerNameArray[@]}"; do
-              echo "ServerName:${Servername}"
-            done
-          FI
+          for Servername in "${ServerNameArray[@]}"; do
+            echo "ServerName:${Servername}"
+          done
+          
