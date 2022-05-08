@@ -36,7 +36,6 @@ jobs:
           echo envName ${{ github.event.inputs.envName }}
           echo serverName ${{ github.event.inputs.serverName }}
           echo command ${{ github.event.inputs.command }}
-          
           if [ -z "$serverName" ]; then
             echo "*****************************************************************"
             echo "ServerName parameter is empty, please Enter the end server name(s) separated with commas. Example: lsdq9tc1008.sdde.deere.com,lsdq9tc1009.sdde.deere.com "
