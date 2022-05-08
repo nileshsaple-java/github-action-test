@@ -27,7 +27,7 @@ on:
         required: true
 
 jobs:
-  gpps-server-start-stop:
+  app-server-start-stop:
     runs-on: ubuntu-latest
 
     steps:
@@ -38,9 +38,9 @@ jobs:
           command: ${{ github.event.inputs.command }} 
           
         run: |
-          echo "environmentName ${ environmentName }"
-          echo "serverName=${ serverName }""
-          echo "command=${ command }
+          echo "environmentName=${environmentName}"
+          echo "serverName=${serverName}"
+          echo "command=${command}"
           
           IFS=',' read -ra ServerNameArray <<< "${{ github.event.inputs.serverName }}";
           for Servername in "${ServerNameArray[@]}"; do
