@@ -36,37 +36,9 @@ jobs:
           echo envName ${{ github.event.inputs.envName }}
           echo serverName ${{ github.event.inputs.serverName }}
           echo command ${{ github.event.inputs.command }}
-          if [ -z "$serverName" ]; then
-            echo "*****************************************************************"
-            echo "ServerName parameter is empty, please Enter the end server name(s) separated with commas. Example: lsdq9tc1008.sdde.deere.com,lsdq9tc1009.sdde.deere.com "
-            echo "*****************************************************************"
-            exit 1;
-          else  
-          while IFS=',' read -ra ServerNameArray; do
+          
+          IFS=',' read -ra ServerNameArray <<< "${{ github.event.inputs.serverName }}";
             for Servername in "${ServerNameArray[@]}"; do
               echo "ServerName:${Servername}"
-              truncateServerName=$(echo "${Servername}" | awk -F'.' '{print $1}')
-              finalServerName=${Servername}/gpps.${truncateServerName}
-              echo "finalServerName=${finalServerName}"
-              echo  "Running Deployit API"
-              InitialUrl=https://deployit.deere.com/deployit/control/prepare/$command/Infrastructure/GDY_29_GPPS_DEPLOY_M/$environmentName/$finalServerName
-              Return_value=$(curl -H "Accept: application/xml" -H "Content-Type: application/xml" -X Get -u $applicationID:$applicationPassword $InitialUrl)
-              echo "Return_value:$Return_value"
-              echo $Return_value | grep 'Permission' &> /dev/null
-              if [ $? == 0 ]; then
-                echo "*****************************************************************"
-                echo  "$command Operation cannot be performed on $serverName server in $environmentName environment, please re-check all parameter combinations!!"
-                echo "*****************************************************************"
-                exit 1;
-              else
-                echo "Return_value:$Return_value doesnot have matching string!!"
-              fi
-              Get_TaskID_url=https://deployit.deere.com/deployit/control
-              TaskID=$(curl -H "Accept: application/xml" -H "Content-Type: application/xml" -X Post -u $applicationID:$applicationPassword -d "$Return_value" $Get_TaskID_url)
-              Initiate_Task_url=https://deployit.deere.com/deployit/task
-              Initiate_Task=$(curl -H "Accept: application/xml" -H "Content-Type: application/xml" -X Post -u $applicationID:$applicationPassword $Initiate_Task_url/$TaskID/$command)
-              Execute_task_url=https://deployit.deere.com/deployit/tasks/v2/$TaskID/start
-              Execute_task=$(curl -H "Accept: application/xml" -H "Content-Type: application/xml" -X Post -u $applicationID:$applicationPassword $Execute_task_url)
             done
-          done <<< "$serverName"
-
+          FI
