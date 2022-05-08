@@ -38,6 +38,8 @@ jobs:
           environmentName: ${{ github.event.inputs.environmentName }}
           serverName: ${{ github.event.inputs.serverName }}
           command: ${{ github.event.inputs.command }} 
+          applicationID: applicationID
+          applicationPassword: applicationPassword
           
         run: |
           echo "environmentName=${environmentName}"
@@ -47,5 +49,9 @@ jobs:
           IFS=',' read -ra ServerNameArray <<< "${{ github.event.inputs.serverName }}";
           for Servername in "${ServerNameArray[@]}"; do
             echo "ServerName:${Servername}"
+            InitialUrl=https://abc/deployit/control/prepare/$command/$environmentName/$finalServerName
+            echo "InitialUrl=${InitialUrl}"
+            Return_value=Get -u $applicationID:$applicationPassword $InitialUrl
+            echo "Return_value=${Return_value}"    
           done
           
